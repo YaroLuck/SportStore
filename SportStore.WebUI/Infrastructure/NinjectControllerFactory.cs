@@ -9,6 +9,7 @@ using System.Web.Routing;
 using Moq;
 using SportStore.Domain.Abstract;
 using SportStore.Domain.Entities;
+using SportStore.Domain.Concrete;
 
 namespace SportStore.WebUI.Infrastructure
 {
@@ -33,6 +34,8 @@ namespace SportStore.WebUI.Infrastructure
 
         private void AddBindings()
         {
+            //привязка к имитированному хранилищю
+            /*
             Mock<IProductRepository> mock = new Mock<IProductRepository>();
             mock.Setup(m => m.Products).Returns(new List<Product> {
                 new Product { Name = "Football", Price = 25 },
@@ -41,7 +44,10 @@ namespace SportStore.WebUI.Infrastructure
             }.AsQueryable());
 
             ninjectKernel.Bind<IProductRepository>().ToConstant(mock.Object);
-            
+            */        
+            //привязка к реальному хранилищю
+            ninjectKernel.Bind<IProductRepository>().To<EFProductRepository>();
+            //эта привязка сообщает Нинжект что мы хотим создавать экз класса EFProductRepository для обслуживания запросов к интерфейсу IProductRepository
             //конфигурирование контейнера
         }
     }
