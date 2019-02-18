@@ -22,11 +22,12 @@ namespace SportStore.WebUI.Controllers
         }
 
         //List() - метод действия, визуализирующий представление, показывающее полный список товаров.
-        public ViewResult List(int page = 1)
+        public ViewResult List(string category, int page = 1)
         {
             ProductListViewModel model = new ProductListViewModel
             {
                 Products = repository.Products
+                    .Where(p => p.Category == null || p.Category == category)
                     .OrderBy(p => p.ProductID)
                     .Skip((page - 1) * PageSize)
                     .Take(PageSize),
@@ -35,7 +36,8 @@ namespace SportStore.WebUI.Controllers
                     CurrentPage = page,
                     ItemsPerPage = PageSize,
                     TotalItems = repository.Products.Count()
-                }
+                },
+                CurrentCategory = category
             };
             /*return View(repository.Products
                 .OrderBy(p => p.ProductID)
