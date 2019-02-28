@@ -81,7 +81,7 @@ namespace SportStore.UnitTests
                 new Product {ProductID = 3, Name = "P3"},
                 new Product {ProductID = 4, Name = "P4"},
                 new Product {ProductID = 5, Name = "P5"},
-                new Product {ProductID = 6, Name = "P6"},
+                new Product {ProductID = 6, Name = "P6"}
             }.AsQueryable());
 
             //Arrange
@@ -95,8 +95,33 @@ namespace SportStore.UnitTests
             PagingInfo pageInfo = result.PagingInfo;
             Assert.AreEqual(pageInfo.CurrentPage, 2);
             Assert.AreEqual(pageInfo.ItemsPerPage, 3);
-            Assert.AreEqual(pageInfo.TotalItems, 5);
+            Assert.AreEqual(pageInfo.TotalItems, 6);
             Assert.AreEqual(pageInfo.TotalPages, 2);
         }
+        [TestMethod]
+        //Этот тест создает имитированное хранилище, содержащее обьекты Product, которые принадлежат к разным категориям.
+        //С помощью метода Action запрашивается одна определенная категория и мы проверяем результаты, чтобы убедиться что получаем правильные обьекты в правильном порядке.
+        public void Can_Filter_Products()
+        {
+            //Arrange - устанавливаем - настройка входных данных для теста.
+            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            mock.Setup(m => m.Products).Returns(new Product[]
+            {
+                new Product {ProductID = 1, Name = "P1", Category = "Cat1"},
+                new Product {ProductID = 2, Name = "P2", Category = "Cat2"},
+                new Product {ProductID = 3, Name = "P3", Category = "Cat1"},
+                new Product {ProductID = 4, Name = "P4", Category = "Cat2"},
+                new Product {ProductID = 5, Name = "P5", Category = "Cat3"},
+            }.AsQueryable());
+            ProductController controller = new  ProductController(mock.Object);
+            controller.PageSize = 3;
+            //Act - действуем - выполняем действие результаты которого тестируем.
+            Product[] result = ((ProductListViewModel) controller.List("Cat2", 1).Model).Products.ToArray();
+            //Assert - проверяем - проверяем результаты выполнения.
+            Assert.AreEqual(result.Length, 2);
+            Assert.IsTrue(result[0].Name == "P2" && result[0].Category == "Cat2");
+            Assert.IsTrue(result[1].Name == "P4" && result[1].Category == "Cat2");
+        }
     }
+
 }
