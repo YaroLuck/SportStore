@@ -97,7 +97,7 @@ DIV.pager A:hover
 DIV.pager A.selected
 {
     background-color: #353535;
-    color: White;
+    color: white;
 }
 DIV#categories A
 {
@@ -105,6 +105,6 @@ DIV#categories A
     text-decoration: none; padding: .6em; color: Yellow;
     border-bottom: 1px solid silver;
 }
-DIV#categories A.selected { background-color: #666; color: White; }
+DIV#categories A.selected { background-color: #666; color: RED; }
 DIV#categories A:hover { background-color: #CCC; }
 DIV#categories A.selected:hover { background-color: #666; }
