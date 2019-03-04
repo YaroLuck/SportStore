@@ -19,15 +19,11 @@ namespace SportStore.WebUI.Controllers
         // GET: Nav
         public PartialViewResult Menu()
         {
-<<<<<<< HEAD
             IEnumerable<string> categories = repository.Products
                 .Select(x => x.Category)
                 .Distinct()
                 .OrderBy(x => x);
             return PartialView(categories);
-=======
-            IEnumerable<string> categories = repository.;
->>>>>>> 3054d6e8798028f2f2239de24a15520a1981bbc4
         }
     }
 }
