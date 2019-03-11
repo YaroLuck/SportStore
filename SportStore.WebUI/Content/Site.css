@@ -102,7 +102,7 @@ DIV.pager A.selected
 DIV#categories A
 {
     font: bold 1.1em "Arial Narrow","Franklin Gothic Medium",Arial; display: block;
-    text-decoration: none; padding: .6em; color: Yellow;
+    text-decoration: none; padding: .6em; color: black;
     border-bottom: 1px solid silver;
 }
 DIV#categories A.selected { background-color: #666; color: RED; }
