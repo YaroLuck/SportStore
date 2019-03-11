@@ -40,8 +40,7 @@ DIV#header
 }
 DIV#header DIV.title
 {
-    font-size: 2em;
-    padding: .6em;
+    font-size: 2em;    padding: .6em;
 }
 DIV#content
 {
@@ -98,5 +97,14 @@ DIV.pager A:hover
 DIV.pager A.selected
 {
     background-color: #353535;
-    color: White;
+    color: white;
 }
+DIV#categories A
+{
+    font: bold 1.1em "Arial Narrow","Franklin Gothic Medium",Arial; display: block;
+    text-decoration: none; padding: .6em; color: Black;
+    border-bottom: 1px solid silver;
+}
+DIV#categories A.selected { background-color: #666; color: White; }
+DIV#categories A:hover { background-color: #CCC; }
+DIV#categories A.selected:hover { background-color: #666; }

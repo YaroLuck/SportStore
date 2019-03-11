@@ -122,6 +122,49 @@ namespace SportStore.UnitTests
             Assert.IsTrue(result[0].Name == "P2" && result[0].Category == "Cat2");
             Assert.IsTrue(result[1].Name == "P4" && result[1].Category == "Cat2");
         }
+
+        [TestMethod]
+        //создаем имитированную реализацию хранилища, которая содержит повторяющиеся и неотсортированные категории.
+        //Наше утверждение - все повторяющиеся строки будут удалены и данные будут отсортированы в алфовитном порядке.
+        public void Can_Create_Categories()
+        {
+            //Arrange - устанавливаем
+            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            mock.Setup(m => m.Products).Returns(new Product[]
+            {
+                new Product {ProductID = 1, Name = "P1", Category = "Apples"},
+                new Product {ProductID = 2, Name = "P2", Category = "Apples"},
+                new Product {ProductID = 3, Name = "P3", Category = "Plums"},
+                new Product {ProductID = 4, Name = "P4", Category = "Oranges"},
+            }.AsQueryable());
+            NavController target = new NavController(mock.Object);
+            //Act - действуем
+            string[] results = ((IEnumerable<string>) target.Menu().Model).ToArray();
+            //Assert - проверяем
+            Assert.AreEqual(results.Length, 3);
+            Assert.AreEqual(results[0], "Apples");
+            Assert.AreEqual(results[1], "Oranges");
+            Assert.AreEqual(results[2], "Plums");
+        }
+
+        [TestMethod]
+        //Указание выбранной категории
+        public void Indicates_Selected_Category()
+        {
+            //Arrange - устанавливаем
+            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            mock.Setup(m => m.Products).Returns(new Product[]
+            {
+                new Product {ProductID = 1, Name = "P1", Category = "Apples"},
+                new Product {ProductID = 4, Name = "P2", Category = "Oranges"},
+            }.AsQueryable());
+            NavController target = new NavController(mock.Object);
+            string categoryToSelect = "Apples";
+            //Act - действуем
+            string result = target.Menu(categoryToSelect).ViewBag.SelectedCategory;
+            //Assert - проверяем
+            Assert.AreEqual(categoryToSelect, result);
+        }
     }
 
 }

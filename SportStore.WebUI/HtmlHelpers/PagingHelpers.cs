@@ -21,12 +21,15 @@ namespace SportStore.WebUI.HtmlHelpers
                 TagBuilder tag = new TagBuilder("a"); // Construct an <a> tag
                 tag.MergeAttribute("href",pageUrl(i));
                 tag.InnerHtml = i.ToString();
+                    //если текущая страница, то выделяем ее, например добавляя класс
                 if(i == pagingInfo.CurrentPage)
                     tag.AddCssClass("selected");
+                    tag.AddCssClass("btn-primary");
                 result.Append(tag.ToString());
             }
 
             return MvcHtmlString.Create(result.ToString());
         }
+        //данный хелпер создает блок ссылок а также добавляет им классы для визуализации. Классы могут быть любыми
     }
 }
