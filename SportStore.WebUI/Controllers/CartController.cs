@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using SportStore.Domain.Abstract;
 using SportStore.Domain.Entities;
+using SportStore.WebUI.Models;
 
 namespace SportStore.WebUI.Controllers
 {
@@ -16,6 +17,15 @@ namespace SportStore.WebUI.Controllers
         {
             repository = repo;
         }
+
+        public ViewResult Index(string returnUrl)
+        {
+            return View(new CartIndexViewModel
+            {
+                Cart = GetCart(),
+                ReturnUrl = returnUrl
+            });
+        }
         public RedirectToRouteResult AddToCart(int productId, string returnUrl)
         {
             Product product = repository.Products.FirstOrDefault(p => p.ProductID == productId);
@@ -23,7 +33,8 @@ namespace SportStore.WebUI.Controllers
             {
                 GetCart().AddItem(product, 1);
             }
-            return RedirectToAction("Index", new { returnUrl });
+            return RedirectToAction("Index", new { returnUrl }); // в результате вывода метода браузеру клиента отправляется HTTP-инструкция пренаправления, которая сообщает брауеру запросить 
+            //новый URL. В этом случае мы сообщаем браузеру запросить URL который будет вызывать метод действия Index контроллера Cart.
         }
 
         public RedirectToRouteResult RemoveFromCart(int productId, string returnUrl)
@@ -38,8 +49,14 @@ namespace SportStore.WebUI.Controllers
 
         private Cart GetCart()
         {
-            Cart cart = (Cart)Session["Cart"];
-            return cart
+            // объект Session использует cookie или перезапись URL для группировки запросов от пользователя
+            Cart cart = (Cart)Session["Cart"]; //чтобы извлечь объект мы считываем состояние сессии
+            if(cart == null)
+            {
+                cart = new Cart();
+                Session["Cart"] = cart; // добавление объекта в состояние сессии
+            }
+            return cart;
         }
     }
 }
