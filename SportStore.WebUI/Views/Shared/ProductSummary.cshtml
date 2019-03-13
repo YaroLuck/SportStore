@@ -10,5 +10,7 @@
         @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
         <input type="submit" value="+ Add to cart" />
     }
+    @*данный код реализувет небольшую HTML-форму для каждого товара в списке. Отправка этой формы вызовет метод AddToCart в контроллере Cart. 
+        По умолчанию BeginForm использует метод HTTP POST*@
     <h4>@Model.Price.ToString("C")</h4>
 </div>
