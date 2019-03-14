@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using SportStore.Domain.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
+using Moq;
 
 namespace SportStore.UnitTests
 {
@@ -152,6 +153,15 @@ namespace SportStore.UnitTests
             target.Clear();
             //Assert
             Assert.AreEqual( target.Lines.Count(), 0);
+        }
+        [TestMethod]
+        public void Can_Add_To_Cart()
+        {
+            //Arrange
+            
+            //Act
+
+            //Assert
         }
     }
 }
