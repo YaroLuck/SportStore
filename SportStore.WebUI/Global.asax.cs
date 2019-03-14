@@ -1,4 +1,6 @@
 ﻿using System;
+using SportStore.Domain.Entities;
+using SportStore.WebUI.Binders;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
