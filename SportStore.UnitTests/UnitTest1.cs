@@ -165,6 +165,18 @@ namespace SportStore.UnitTests
             //Assert - проверяем
             Assert.AreEqual(categoryToSelect, result);
         }
+        [TestMethod]
+        public void Adding_Product_To_Cart_Goes_To_Cart_Screen()
+        {
+            //Arrange
+            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            mock.Setup(m => m.Products).Returns(new Product[] {
+                new Product { )
+            //Act
+
+            //Assert
+
+        }
     }
 
 }

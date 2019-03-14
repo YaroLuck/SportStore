@@ -1,10 +1,15 @@
 ﻿using System;
-using System.Text;
 using System.Collections.Generic;
-using SportStore.Domain.Entities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using System.Web.Mvc;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using SportStore.Domain.Abstract;
+using SportStore.Domain.Entities;
+using SportStore.WebUI.Controllers;
+using SportStore.WebUI.HtmlHelpers;
+using SportStore.WebUI.Models;
 
 namespace SportStore.UnitTests
 {
@@ -158,10 +163,17 @@ namespace SportStore.UnitTests
         public void Can_Add_To_Cart()
         {
             //Arrange
-            
-            //Act
+            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            mock.Setup(m => m.Products).Returns(new Product[] { new Product { ProductID = 1, Name = "P1", Category = "Apples" }, }.AsQueryable());
 
+            Cart cart = new Cart();
+
+            CartController target = new CartController(mock.Object);
+            //Act
+            target.AddToCart(cart, 1, null);
             //Assert
+            Assert.AreEqual(cart.Lines.Count(), 1);
+            Assert.AreEqual(cart.Lines.ToArray()[0].Product.ProductID, 1);
         }
     }
 }
