@@ -171,11 +171,30 @@ namespace SportStore.UnitTests
             //Arrange
             Mock<IProductRepository> mock = new Mock<IProductRepository>();
             mock.Setup(m => m.Products).Returns(new Product[] {
-                new Product { )
+                new Product  {ProductID = 1, Name = "P1", Category = "Apples"},
+            }.AsQueryable());
+
+            Cart cart = new Cart();
+
+            CartController target = new CartController(mock.Object);
             //Act
-
+            RedirectToRouteResult result = target.AddToCart(cart, 1, "myUrl");
             //Assert
+            Assert.AreEqual(result.RouteValues["action"], "Index");
+            Assert.AreEqual(result.RouteValues["returnUrl"], "myUrl");
+        }
+        [TestMethod]
+        public void Can_View_Contents()
+        {
+            //Arrange
+            Cart cart = new Cart();
 
+            CartController target = new CartController(null);
+            //Act
+            CartIndexViewModel result = (CartIndexViewModel)target.Index(cart, "myUrl").ViewData.Model;
+            //Assert
+            Assert.AreSame(result.Cart, cart);
+            Assert.AreEqual(result.ReturnUrl, "myUrl");
         }
     }
 
