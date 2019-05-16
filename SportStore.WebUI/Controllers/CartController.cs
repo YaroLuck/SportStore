@@ -48,6 +48,11 @@ namespace SportStore.WebUI.Controllers
             }
             return RedirectToAction("Index", new { returnUrl });
         }
+        //виджет корзины
+        public PartialViewResult Summary(Cart cart)
+        {
+            return PartialView(cart);
+        }
         //стр. 220
        /* private Cart GetCart()
         {
