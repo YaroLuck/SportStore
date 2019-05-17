@@ -9,7 +9,7 @@ using System.ComponentModel.DataAnnotations;
 namespace SportStore.Domain.Entities
 {
     //класс для предоставления клиенту полей для ввода информации о доставке
-    class ShippingDetails
+    public class ShippingDetails
     {
         [Required(ErrorMessage = "Please enter a name")]
             public string Name { get; set; }

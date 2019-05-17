@@ -53,6 +53,11 @@ namespace SportStore.WebUI.Controllers
         {
             return PartialView(cart);
         }
+        //добавление информации о заказе
+        public ViewResult Checkout()
+        {
+            return View(new ShippingDetails());
+        }
         //стр. 220
        /* private Cart GetCart()
         {
