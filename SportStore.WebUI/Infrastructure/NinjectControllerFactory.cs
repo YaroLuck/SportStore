@@ -10,6 +10,7 @@ using Moq;
 using SportStore.Domain.Abstract;
 using SportStore.Domain.Entities;
 using SportStore.Domain.Concrete;
+using System.Configuration;
 
 namespace SportStore.WebUI.Infrastructure
 {
@@ -49,6 +50,16 @@ namespace SportStore.WebUI.Infrastructure
             ninjectKernel.Bind<IProductRepository>().To<EFProductRepository>();
             //эта привязка сообщает Нинжект что мы хотим создавать экз класса EFProductRepository для обслуживания запросов к интерфейсу IProductRepository
             //конфигурирование контейнера
+            //Использование Ninject Для содания экземпляров IOrderProscessor
+            EmailSettings emailSettings = new EmailSettings
+            {
+                WriteAsFile = bool.Parse(ConfigurationManager
+                .AppSettings["Email.WriteAsFile"] ?? "false") //так мы читаем значение этого свойства, которое дает на доступ в WEB.CONFIG,настройки прилоежние
+            };
+            ninjectKernel.Bind<IOrderProcessor>()
+                .To<EmailOrderProcessor>()
+                .WithConstructorArgument("settings", emailSettings);
+
         }
     }
 }

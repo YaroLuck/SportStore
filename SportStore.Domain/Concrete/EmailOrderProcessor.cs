@@ -82,8 +82,6 @@ namespace SportStore.Domain.Concrete
                     mailMessage.BodyEncoding = Encoding.ASCII;
                 }
                 smtpClient.Send(mailMessage);
-
-
             }
         }
     }
