@@ -13,9 +13,11 @@ namespace SportStore.WebUI.Controllers
     {
         private IProductRepository repository;
         // GET: Cart
-        public CartController(IProductRepository repo)
+        private IOrderProcessor orderProcessor;
+        public CartController(IProductRepository repo, IOrderProcessor proc)
         {
             repository = repo;
+            orderProcessor = proc;
         }
 
         public ViewResult Index(Cart cart, string returnUrl)
@@ -52,6 +54,25 @@ namespace SportStore.WebUI.Controllers
         public PartialViewResult Summary(Cart cart)
         {
             return PartialView(cart);
+        }
+
+        [HttpPost] // означает что метод Checkout будет вызван для обработки ПОСТ запроса. МЕХАНИЗМ СВЯЗЫВАНИЯ ДАННЫХ ТУТ ПРИСУТСТВУЕТ
+        public ViewResult Checkout(Cart cart, ShippingDetails shippingDetails)
+        {
+            if(cart.Lines.Count() == 0)
+            {
+                ModelState.AddModelError("", "Sorry, your cart is empty!"); //если нет товаров в корзине
+            }
+            if(ModelState.IsValid)
+            {
+                orderProcessor.ProcessOrder(cart, shippingDetails);
+                cart.Clear();
+                return View("Completed");
+            }
+            else
+            {
+                return View(shippingDetails);
+            }
         }
         //добавление информации о заказе
         public ViewResult Checkout()
