@@ -50,6 +50,7 @@
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTest2.cs" />
+    <Compile Include="AdminTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="EntityFramework">
