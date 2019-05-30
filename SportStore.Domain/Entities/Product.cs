@@ -17,6 +17,7 @@ namespace SportStore.Domain.Entities
         public string Name { get; set; }
 
         [DataType(DataType.MultilineText)]
+        [Required(ErrorMessage ="Please enter a description")]
         public string Description { get; set; }
 
         [Required]
