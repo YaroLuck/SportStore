@@ -159,21 +159,21 @@ namespace SportStore.UnitTests
             //Assert
             Assert.AreEqual( target.Lines.Count(), 0);
         }
-        [TestMethod]
-        public void Can_Add_To_Cart()
-        {
-            //Arrange
-            Mock<IProductRepository> mock = new Mock<IProductRepository>();
-            mock.Setup(m => m.Products).Returns(new Product[] { new Product { ProductID = 1, Name = "P1", Category = "Apples" }, }.AsQueryable());
+        //[TestMethod]
+        //public void Can_Add_To_Cart()
+        //{
+        //    //Arrange
+        //    Mock<IProductRepository> mock = new Mock<IProductRepository>();
+        //    mock.Setup(m => m.Products).Returns(new Product[] { new Product { ProductID = 1, Name = "P1", Category = "Apples" }, }.AsQueryable());
 
-            Cart cart = new Cart();
+        //    Cart cart = new Cart();
 
-            CartController target = new CartController(mock.Object);
-            //Act
-            target.AddToCart(cart, 1, null);
-            //Assert
-            Assert.AreEqual(cart.Lines.Count(), 1);
-            Assert.AreEqual(cart.Lines.ToArray()[0].Product.ProductID, 1);
-        }
+        //    CartController target = new CartController(mock.Object);
+        //    //Act
+        //    target.AddToCart(cart, 1, null);
+        //    //Assert
+        //    Assert.AreEqual(cart.Lines.Count(), 1);
+        //    Assert.AreEqual(cart.Lines.ToArray()[0].Product.ProductID, 1);
+        //}
     }
 }
